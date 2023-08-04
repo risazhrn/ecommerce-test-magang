@@ -116,4 +116,16 @@ public class ProductDao {
         map.addValue("url_image", updateData.getUrl_image());
         this.jdbcTemplate.update(query, map);
     }
+
+    public void removeCategory(Integer id){
+        String query = """
+                UPDATE public.products
+                SET category_id=null
+                WHERE category_id=:id
+                """;
+
+        MapSqlParameterSource map = new MapSqlParameterSource();
+        map.addValue("id", id);
+        this.jdbcTemplate.update(query, map);
+    }
 }

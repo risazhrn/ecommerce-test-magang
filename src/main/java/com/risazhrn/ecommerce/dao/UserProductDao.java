@@ -121,4 +121,14 @@ public class UserProductDao {
         this.jdbcTemplate.update(query, map);
     }
 
+    public void deleteByUser(Integer id) {
+        String query = """
+               DELETE FROM public.user_product WHERE user_id=:id
+                """;
+
+        MapSqlParameterSource map = new MapSqlParameterSource();
+        map.addValue("id", id);
+        this.jdbcTemplate.update(query, map);
+    }
+
 }

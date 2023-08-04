@@ -13,8 +13,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductDao dao;
+    private final CategoryService categoryService;
 
     public void save(ProductDto.Save data){
+        categoryService.findById(data.getCategory_id());
         this.dao.save(data);
     }
 
@@ -33,6 +35,7 @@ public class ProductService {
 
     public void update(ProductDto.Update data, Integer id){
         findById(id);
+        categoryService.findById(data.getCategory_id());
         this.dao.update(data, id);
     }
 }

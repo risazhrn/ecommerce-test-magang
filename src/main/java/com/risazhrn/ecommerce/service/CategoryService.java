@@ -1,6 +1,7 @@
 package com.risazhrn.ecommerce.service;
 
 import com.risazhrn.ecommerce.dao.CategoryDao;
+import com.risazhrn.ecommerce.dao.ProductDao;
 import com.risazhrn.ecommerce.dto.CategoryDto;
 import com.risazhrn.ecommerce.entity.Category;
 import com.risazhrn.ecommerce.exception.IdNotFoundException;
@@ -13,6 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryService {
     private final CategoryDao dao;
+    private final ProductDao productDao;
 
     public void save(CategoryDto.Save data){
         this.dao.save(data);
@@ -28,6 +30,7 @@ public class CategoryService {
 
     public void delete(Integer id){
         findById(id);
+        this.productDao.removeCategory(id);
         this.dao.delete(id);
     }
 

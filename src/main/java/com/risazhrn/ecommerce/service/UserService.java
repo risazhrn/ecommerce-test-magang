@@ -1,6 +1,7 @@
 package com.risazhrn.ecommerce.service;
 
 import com.risazhrn.ecommerce.dao.UserDao;
+import com.risazhrn.ecommerce.dao.UserProductDao;
 import com.risazhrn.ecommerce.dto.UserDto;
 import com.risazhrn.ecommerce.entity.Users;
 import com.risazhrn.ecommerce.exception.IdNotFoundException;
@@ -13,6 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
     private final UserDao dao;
+    private final UserProductDao userProductDao;
 
     public void save(UserDto.Save data){
         this.dao.save(data);
@@ -28,6 +30,7 @@ public class UserService {
 
     public  void delete(Integer id){
         findById(id);
+        this.userProductDao.deleteByUser(id);
         this.dao.delete(id);
     }
 
