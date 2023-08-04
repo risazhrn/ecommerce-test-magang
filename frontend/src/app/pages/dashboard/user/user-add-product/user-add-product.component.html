@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="bg-primary text-white p-4 my-4 rounded">
+    <h3>Catalog Produk</h3>
+  </div>
+  <div class="my-2 row">
+    <div *ngFor="let data of productList" class="col-3" style="cursor: pointer;">
+      <div class="card"  [routerLink]="['/', 'dashboard', 'product-detail', data.id]">
+          <h5 class="card-header text-center fw-normal">
+            <img src="{{data.urlImage}}" alt="" width="95%">
+          </h5>
+          <div class="card-body">
+            <h5 class="card-title text-center">{{ data.name }}</h5>
+            <p class="text-center">{{data.price | currency : 'Rp. '}}</p>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

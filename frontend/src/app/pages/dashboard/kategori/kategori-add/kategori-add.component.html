@@ -1,0 +1,15 @@
+<div class="container">
+    <div class="bg-primary text-white m-5 p-4 my-4 rounded">
+      <h3>Tambah Category</h3>
+  </div>
+      <div class="card m-5 my-2 p-5">
+      <form [formGroup]="categoryForm">
+        <div class="form-group py-2">
+            <label for="Name">Category Name</label>
+            <input type="text" class="form-control" id="name" aria-describedby="name" placeholder="Enter name" name="name" formControlName="name">
+        </div>
+        <button type="button" class="btn btn-primary mt-2" (click)="save()">Simpan</button>
+      </form>
+    </div>
+    </div>
+    

@@ -1,0 +1,36 @@
+
+<div class="container">
+    <div class="bg-primary text-white p-4 my-4 d-flex justify-content-between rounded">
+          <h3>Data User</h3>
+          <button type="button" class="btn btn-light" [routerLink]="['/', 'dashboard', 'user', 'add']">Tambah User</button>
+      </div>
+      <table class="table table-bordered">
+        <caption>List of users</caption>
+          <thead>
+            <tr class="text-center">
+              <th scope="col">#</th>
+              <th scope="col">Nama Pengguna</th>
+              <th scope="col">Alamat Email</th>
+              <th scope="col">Phone</th>
+              <th scope="col">Alamat</th>
+              <th scope="col">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of userList;let i=index">
+              <th scope="row" class="text-center">{{i+1}}</th>
+              <td>{{data.name}}</td>
+              <td>{{data.email}}</td>
+              <td class="text-center">{{data.phone}}</td>
+              <td>{{data.address}}</td>
+              <td>
+                <div class="d-flex justify-content-center gap-1">
+                  <button type="button" class="btn btn-primary" [routerLink]="['/', 'dashboard', 'catalog-product', data.id]"><fa-icon [icon]="faShoppingCart"></fa-icon></button>
+                  <button type="button" class="btn btn-dark" [routerLink]="['/', 'dashboard', 'user', data.id]"><fa-icon [icon]="faInfoCircle"></fa-icon></button>
+                  <button type="button" class="btn btn-danger" (click)="deleteUser(data.id)"><fa-icon [icon]="faTrashAlt"></fa-icon></button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+  </div>

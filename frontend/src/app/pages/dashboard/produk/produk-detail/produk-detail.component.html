@@ -1,0 +1,60 @@
+<div class="container">
+    <div class="bg-primary text-white p-4 my-4 rounded d-flex justify-content-between">
+        <h3>Detail Produk</h3>
+        <button type="button" class="btn btn-light" (click)="toggleEdit()">Edit</button>
+    </div>
+    <div class="card p-4 my-3" >
+        <form  [formGroup]="productForm">
+          <div class="form-group py-2">
+            <label for="stock" class="my-2">Gambar</label>
+            <img src="{{ gambar || product.urlImage}}" alt="" class="d-block mb-2" width="40%"/>
+            <input
+              type="text"
+              class="form-control"
+              (input)="setGambar($event)"
+              placeholder="Enter url image"
+              formControlName="url_image"
+              [ngModel]="product.urlImage"
+              [readOnly]="!isEdit"
+            />
+          </div>
+          <div class="form-group py-2">
+            <label for="Name">Nama Produk</label>
+            <input type="text" class="form-control" id="name" aria-describedby="name" placeholder="Enter name product" name="name" formControlName="name" [ngModel]="product.name" [readOnly]="!isEdit">
+        </div>
+        <div class="form-group py-2">
+          <label for="Name">Deskripsi</label>
+          <input
+            type="text"
+            class="form-control"
+            id="description"
+            aria-describedby="description"
+            placeholder="Enter description product"
+            name="description"
+            formControlName="description"
+            [ngModel]="product.description"
+            [readOnly]="!isEdit"
+          />
+        </div>
+        <div class="form-group py-2">
+            <label for="Name">Kategori</label>
+            <select class="form-select" formControlName="category_id" aria-label="Default select example">
+              <option *ngFor="let data of categoryList" [ngValue]=data.id [disabled]="!isEdit"> {{data.name}} </option>
+            </select>
+        </div>
+
+        <div class="form-group py-2">
+            <label for="stock">Stock</label>
+            <input type="number" class="form-control" id="stock" aria-describedby="stock" placeholder="0" name="stock" formControlName="stock" [ngModel]="product.stock" [readOnly]="!isEdit">
+        </div>
+
+        <div class="form-group py-2">
+          <label for="stock">Harga</label>
+          <input type="text" class="form-control" id="name" aria-describedby="price" placeholder="Rp." name="price" formControlName="price" [ngModel]="product.price" [readOnly]="!isEdit">
+      </div>
+        
+        
+        <button type="button" class="btn btn-primary mt-2" (click)="update()" *ngIf="isEdit">Simpan</button>
+      </form>
+    </div>
+</div>
