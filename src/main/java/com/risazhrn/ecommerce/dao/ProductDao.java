@@ -19,7 +19,7 @@ import java.util.Optional;
 public class ProductDao {
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
-    public void save(ProductDto.Save inputData){
+    public void save(ProductDto.Save inputData) {
         String query = """
                 INSERT INTO public.products
                 ("name", category_id, stock, description, price, url_image)
@@ -36,10 +36,11 @@ public class ProductDao {
         this.jdbcTemplate.update(query, map);
     }
 
-    public List<Products> findAll(){
+    public List<Products> findAll() {
         String query = """
-                SELECT id, "name", category_id, stock, description, price, url_image
-                FROM public.products
+                SELECT p.id, p.name, p.category_id, p.stock, p.description, p.price, p.url_image, c.name as category_name
+                FROM public.products p
+                LEFT JOIN category c on c.id = p.category_id;
                 """;
         return this.jdbcTemplate.query(query, new RowMapper<Products>() {
             @Override
@@ -52,15 +53,18 @@ public class ProductDao {
                 product.setDescription(rs.getString("description"));
                 product.setPrice(rs.getInt("price"));
                 product.setUrlImage(rs.getString("url_image"));
+                product.setCategoryName(rs.getString("category_name"));
                 return product;
             }
         });
     }
 
-    public Optional<Products> findById(Integer id){
+    public Optional<Products> findById(Integer id) {
         String query = """
-                SELECT id, "name", category_id, stock, description, price, url_image
-                FROM public.products where id=:id;
+                SELECT p.id, p.name, p.category_id, p.stock, p.description, p.price, p.url_image, c.name as category_name
+                FROM public.products p
+                LEFT JOIN category c on c.id = p.category_id
+                where p.id=:id;
                 """;
         MapSqlParameterSource map = new MapSqlParameterSource();
         map.addValue("id", id);
@@ -76,6 +80,7 @@ public class ProductDao {
                     product.setDescription(rs.getString("description"));
                     product.setPrice(rs.getInt("price"));
                     product.setUrlImage(rs.getString("url_image"));
+                    product.setCategoryName(rs.getString("category_name"));
                     return Optional.of(product);
                 }
             });
@@ -84,7 +89,7 @@ public class ProductDao {
         }
     }
 
-    public void delete(Integer id){
+    public void delete(Integer id) {
         String query = """
                 DELETE FROM public.products
                 WHERE id=:id
@@ -95,7 +100,7 @@ public class ProductDao {
         this.jdbcTemplate.update(query, map);
     }
 
-    public void update(ProductDto.Update updateData, Integer id){
+    public void update(ProductDto.Update updateData, Integer id) {
         String query = """
                 UPDATE public.products
                 SET "name"=:name, category_id=:category_id, stock=:stock, description=:description, price=:price, url_image=:url_image
