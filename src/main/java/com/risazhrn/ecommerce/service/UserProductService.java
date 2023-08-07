@@ -31,7 +31,7 @@ public class UserProductService {
         return this.dao.findAll();
     }
 
-    public UserProduct findById(Integer id){
+    public UserProduct.UserListTransaction findById(Integer id){
         return this.dao.findById(id).orElseThrow(()-> new IdNotFoundException("Product dengan id " + id + " tidak ditemukan."));
     }
 
@@ -54,4 +54,9 @@ public class UserProductService {
             throw new IdNotFoundException("Stock tidak memenuhi");
         }
     }
+
+    public List<UserProduct.UserListTransaction> findUserTransaction(Integer id){
+        return this.dao.findUserTransaction(id);
+    }
+
 }

@@ -2,7 +2,7 @@
 <div class="container">
     <div class="bg-primary text-white p-4 my-4 d-flex justify-content-between rounded">
         <h3>Data Produk</h3>
-        <button type="button" class="btn btn-light" [routerLink]="['/', 'dashboard', 'product', 'add']">Tambah Produk</button>
+        <button type="button" class="btn btn-primary border border-white" [routerLink]="['/', 'dashboard', 'product', 'add']">Tambah Produk</button>
     </div>
     <table class="table table-bordered">
       <caption>List of products</caption>
@@ -12,6 +12,7 @@
             <th scope="col">Nama Produk</th>
             <th scope="col">Kategori</th>
             <th scope="col">Stok</th>
+            <th scope="col">Price</th>
             <th scope="col">Aksi</th>
           </tr>
         </thead>
@@ -21,6 +22,7 @@
             <td>{{data.name}}</td>
             <td>{{data.categoryName}}</td>
             <td class="text-center">{{data.stock}}</td>
+            <td>{{data.price | currency : 'Rp' : 'symbol' : '3.0'}}</td>
             <td>
               <div class="d-flex justify-content-center gap-1">
                 <button type="button" class="btn btn-dark" [routerLink]="['/', 'dashboard', 'product', data.id]"><fa-icon [icon]="faInfoCircle"></fa-icon></button>

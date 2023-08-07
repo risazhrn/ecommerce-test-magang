@@ -12,6 +12,8 @@ import { KategoriAddComponent } from './kategori/kategori-add/kategori-add.compo
 import { ProdukAddComponent } from './produk/produk-add/produk-add.component';
 import { IndexComponent } from './index/index.component';
 import { UserAddProductDetailComponent } from './user/user-add-product-detail/user-add-product-detail.component';
+import { UserDetailTransactionComponent } from './user/user-detail-transaction/user-detail-transaction.component';
+import { UserListTransactionComponent } from './user/user-list-transaction/user-list-transaction.component';
 
 const routes: Routes = [
   {
@@ -27,7 +29,7 @@ const routes: Routes = [
     component : UserAddComponent
   },
   {
-    path : "user/:id",
+    path : "user/:userId",
     component : UserDetailComponent
   },
 
@@ -36,8 +38,17 @@ const routes: Routes = [
     component : UserAddProductComponent
   },
   {
-    path : "product-detail/:id",
+    path : "product-detail/:userId/:productId",
     component : UserAddProductDetailComponent
+  },
+  
+  {
+    path : "user/:userId/transaction",
+    component : UserListTransactionComponent
+  },
+  {
+    path : "user/:userId/transaction/:productId",
+    component : UserDetailTransactionComponent
   },
   {
     path : "product",

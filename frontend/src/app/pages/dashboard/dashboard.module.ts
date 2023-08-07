@@ -20,6 +20,10 @@ import { KategoriAddComponent } from './kategori/kategori-add/kategori-add.compo
 import { ProdukAddComponent } from './produk/produk-add/produk-add.component';
 import { IndexComponent } from './index/index.component';
 import { UserAddProductDetailComponent } from './user/user-add-product-detail/user-add-product-detail.component';
+import { UserAddProductCartComponent } from './user/user-add-product-cart/user-add-product-cart.component';
+import { LocalStorageService } from './local-storage.service';
+import { UserDetailTransactionComponent } from './user/user-detail-transaction/user-detail-transaction.component';
+import { UserListTransactionComponent } from './user/user-list-transaction/user-list-transaction.component';
 
 
 @NgModule({
@@ -37,6 +41,9 @@ import { UserAddProductDetailComponent } from './user/user-add-product-detail/us
     ProdukAddComponent,
     IndexComponent,
     UserAddProductDetailComponent,
+    UserAddProductCartComponent,
+    UserDetailTransactionComponent,
+    UserListTransactionComponent,
   ],
   imports: [
     CommonModule,
@@ -49,7 +56,8 @@ import { UserAddProductDetailComponent } from './user/user-add-product-detail/us
   providers: [
     UserService,
     ProdukService,
-    KategoriService
+    KategoriService,
+    LocalStorageService
   ]
 })
 export class DashboardModule { }

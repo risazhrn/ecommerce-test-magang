@@ -1,0 +1,35 @@
+<div class="card p-3">
+  <h5 class="fw-bold">My Cart</h5>
+  <div *ngFor="let data of products; let i = index" class="">
+    <div class="row mt-3">
+      <div class="col-3">
+        <img src="{{ data.image }}" alt="" width="100%" />
+      </div>
+
+      <div class="col">
+        <h6>{{ data.name }}</h6>
+        <div class="d-flex justify-content-between">
+          <p class="fw-bold">
+            {{ data.price | currency : "Rp" : "symbol" : "3.0" }}
+          </p>
+          <div>
+            x {{ data.quantity}}
+            <fa-icon [icon]="faTrashAlt" class="text-danger me-2 ms-4" style="cursor: pointer;" (click)="removeProductCart(data.id)"></fa-icon>
+          </div>
+        </div>
+       
+      </div>
+    </div>
+  </div>
+
+  <div class="" *ngIf="products.length">
+    <hr />
+    <div class="d-flex justify-content-between">
+      <h6>Total</h6>
+      <p class="fw-bold">{{ total | currency : "Rp" : "symbol" : "3.0" }}</p>
+    </div>
+    <div class="d-flex justify-content-center my-2">
+      <button class="btn btn-primary" (click)="checkout()">Checkout</button>
+    </div>
+  </div>
+</div>

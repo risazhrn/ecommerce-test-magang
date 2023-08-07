@@ -13,7 +13,7 @@ import { Category } from 'src/app/model/category';
 export class ProdukDetailComponent implements OnInit{
 
   productId!: string;
-  product!: Product;
+  product?: Product;
   productForm!: FormGroup;
   isEdit: boolean = false;
   categoryList!: Category[];

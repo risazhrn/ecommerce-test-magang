@@ -12,7 +12,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class KategoriDetailComponent implements OnInit{
 
   categoryId!: string;
-  category!: Category;
+  category?: Category;
   categoryForm!: FormGroup;
   isEdit: boolean = false;
 
@@ -55,6 +55,10 @@ export class KategoriDetailComponent implements OnInit{
         this.router.navigate(['/', 'dashboard', 'category'])
       }
     })
+  }
+
+  get name() : any{
+    return this.categoryForm.get('name')
   }
 
 }

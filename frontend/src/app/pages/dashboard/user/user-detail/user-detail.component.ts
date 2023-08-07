@@ -12,7 +12,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class UserDetailComponent implements OnInit{
 
   userId!: string;
-  user!: User;
+  user?: User;
   userForm! : FormGroup
   isEdit: boolean = false;
   
@@ -27,8 +27,9 @@ export class UserDetailComponent implements OnInit{
 
   ngOnInit(): void {
     this.activateRoute.params.subscribe(param => {
-      this.userId = param['id']; 
+      this.userId = param['userId']; 
     })
+    
 
     this.getUserById(); 
 
@@ -54,7 +55,6 @@ export class UserDetailComponent implements OnInit{
   }
 
   update(){
-    console.log(this.userForm.value)
     this.service.update(this.userForm.value,Number(this.userId)).subscribe(resp => {
       if (resp.status == 200) {
         console.log('berhasil')

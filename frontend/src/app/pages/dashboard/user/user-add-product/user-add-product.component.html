@@ -1,18 +1,36 @@
 <div class="container">
-  <div class="bg-primary text-white p-4 my-4 rounded">
-    <h3>Catalog Produk</h3>
-  </div>
+  <div
+    class="d-flex justify-content-between bg-dark text-white p-4 my-4 rounded">
+  
+    <h3>Katalog Produk</h3>
+    <div class="d-flex gap-2">
+    <button class="btn btn-dark border border-light" [routerLink]="['/', 'dashboard', 'user', this.userId, 'transaction']">Daftar Transaksi</button>
+
+      <button type="button" class="btn btn-primary position-relative">
+        <fa-icon [icon]="faShoppingCart"></fa-icon>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          {{localCart}}
+          <span class="visually-hidden">Keranjang Produk</span>
+        </span>
+      </button>
+</div>
+</div>
+
   <div class="my-2 row">
-    <div *ngFor="let data of productList" class="col-3" style="cursor: pointer;">
-      <div class="card"  [routerLink]="['/', 'dashboard', 'product-detail', data.id]">
-          <h5 class="card-header text-center fw-normal">
-            <img src="{{data.urlImage}}" alt="" width="95%">
-          </h5>
+    <div *ngFor="let data of productList" class="col" style="cursor: pointer;">
+      <div class="card"  [routerLink]="['/', 'dashboard',  'product-detail', userId,  data.id]">
+          <div class="card-header text-center fw-normal d-flex justify-content-center" style="height:200px;">
+            <img src="{{data.urlImage}}" alt="" width="100%" class="d-block">
+          </div>
           <div class="card-body">
-            <h5 class="card-title text-center">{{ data.name }}</h5>
-            <p class="text-center">{{data.price | currency : 'Rp. '}}</p>
+            <p class="card-title text-center fs-4">{{ data.name }}</p>
+            <h4 class="text-center fw-bold">{{data.price | currency : 'Rp' : 'symbol' : '3.0'}}</h4>
           </div>
         </div>
       </div>
+      <div class="col-4">
+        <app-user-add-product-cart />
+      </div>
+
   </div>
 </div>

@@ -1,0 +1,46 @@
+<div class="container">
+  <div
+    class="bg-dark text-white p-4 my-4 rounded d-flex justify-content-between"
+  >
+    <h3>Rincian Pesanan </h3>
+    
+    <button
+      type="button"
+      class="btn btn-dark border border-white"
+      [routerLink]="['/', 'dashboard', 'catalog-product', userId]"
+    >
+      catalog product
+    </button>
+  </div>
+  <div class="card p-4">
+    <div class="d-flex justify-content-between mt-2">
+      <h5>Informasi Pemesan</h5>
+      <p>{{transaction?.createdAt | date : 'short'}}</p>
+    </div>
+      <p>
+        {{ transaction?.userName }} <br />
+        {{ transaction?.phone }} <br />
+        {{ transaction?.address}}
+      </p>
+  </div>
+  <div class="card mt-2 mb-5 p-4">
+    <h5>Informasi Produk</h5>
+    <div class="my-2">
+      <span class="badge text-bg-warning">{{transaction?.categoryName | titlecase}}</span></div>
+    <div class="mt-2">
+      
+    <img src="{{ transaction?.urlImage }}" width="30%" /></div>
+    <h6 class="fw-bold mt-4">{{transaction?.productName}}</h6>
+    <p>{{ transaction?.description }}</p>
+    <div class="d-flex justify-content-between">
+      <p>x {{ transaction?.quantity }}</p>
+      <p class="fw-bold">{{transaction?.price | currency : 'Rp' : 'symbol' : '3.0'}}</p>
+  </div>
+  <hr>
+  <div class="d-flex justify-content-between">
+  <h5>Total Pesanan</h5>
+  <h5>{{total | currency : 'Rp' : 'symbol' : '3.0'}}</h5>
+</div>
+  </div>
+  
+</div>

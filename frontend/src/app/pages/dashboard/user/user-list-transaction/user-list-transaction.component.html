@@ -1,0 +1,41 @@
+<div class="container">
+  <div
+    class="bg-dark text-white p-4 my-4 rounded d-flex justify-content-between"
+  >
+    <h3>Riwayat Transaksi</h3>
+    <button
+      type="button"
+      class="btn btn-dark border border-white"
+      [routerLink]="['/', 'dashboard', 'catalog-product', userId]"
+    >
+      catalog product
+    </button>
+  </div>
+  <div class="">
+    <div
+      class="card my-2"
+      *ngFor="let data of transactionList"
+      [routerLink]="['/', 'dashboard', 'user', userId, 'transaction', data.id]"
+      style="cursor: pointer"
+    >
+      <div class="p-4">
+        <div class="d-flex justify-content-between">
+          <h5>Transaksi Selesai</h5>
+          <p>{{ data.createdAt | date : 'medium' }}</p>
+        </div>
+        <hr />
+        <div class="row">
+          <div class="col-2">
+          <img src="{{ data.urlImage }}" width="100%"/>
+        </div>
+        <div class="col d-flex justify-content-between m-auto">
+          <h5>{{ data.productName }}</h5>
+          <p>Jumlah : {{ data.quantity }}</p>
+        </div>
+        </div>
+
+       
+      </div>
+    </div>
+  </div>
+</div>

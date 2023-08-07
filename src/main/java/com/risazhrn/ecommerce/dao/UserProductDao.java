@@ -56,26 +56,65 @@ public class UserProductDao {
         });
     }
 
-    public Optional<UserProduct> findById(Integer id) {
+    public List<UserProduct.UserListTransaction> findUserTransaction(Integer id) {
         String query = """
-                SELECT id, user_id, product_id, quantity, created_at, updated_at
-                FROM public.user_product where id=:id
+                select up.id,up.user_id, up.product_id, u."name" as username, p."name" as product_name, p.url_image, up.quantity, up.created_at FROM public.user_product up
+                join products p on up.product_id = p.id
+                join users u on up.user_id = u.id
+                WHERE up.user_id =:user_id
+                order by up.created_at desc;
+                """;
+
+        MapSqlParameterSource map = new MapSqlParameterSource();
+        map.addValue("user_id", id);
+        return this.jdbcTemplate.query(query, map, new RowMapper<UserProduct.UserListTransaction>() {
+
+            @Override
+            public UserProduct.UserListTransaction mapRow(ResultSet rs, int rowNum) throws SQLException {
+                UserProduct.UserListTransaction userProduct = new UserProduct.UserListTransaction();
+                userProduct.setId(rs.getInt("id"));
+                userProduct.setUserId(rs.getInt("user_id"));
+                userProduct.setProductId(rs.getInt("product_id"));
+                userProduct.setUserName(rs.getString("username"));
+                userProduct.setProductName(rs.getString("product_name"));
+                userProduct.setQuantity(rs.getInt("quantity"));
+                userProduct.setCreatedAt(rs.getTimestamp("created_at"));
+                userProduct.setUrlImage(rs.getString("url_image"));
+                return userProduct;
+            }
+        });
+    }
+
+    public Optional<UserProduct.UserListTransaction> findById(Integer id) {
+        String query = """
+                select up.id,up.user_id, u.name as username, u.address,u.phone, up.product_id, p."name" as product_name, c.name as category_name, p.url_image, p.description, p.price, up.quantity, up.created_at FROM public.user_product up
+                join products p on up.product_id = p.id
+                join category c on c.id = p.category_id
+                join users u on up.user_id = u.id
+                WHERE up.id=:id
                 """;
 
         MapSqlParameterSource map = new MapSqlParameterSource();
         map.addValue("id", id);
 
         try {
-            return this.jdbcTemplate.queryForObject(query, map, new RowMapper<Optional<UserProduct>>() {
+            return this.jdbcTemplate.queryForObject(query, map, new RowMapper<Optional<UserProduct.UserListTransaction>>() {
                 @Override
-                public Optional<UserProduct> mapRow(ResultSet rs, int rowNum) throws SQLException {
-                    UserProduct userProduct = new UserProduct();
+                public Optional<UserProduct.UserListTransaction> mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    UserProduct.UserListTransaction userProduct = new UserProduct.UserListTransaction();
                     userProduct.setId(rs.getInt("id"));
                     userProduct.setUserId(rs.getInt("user_id"));
                     userProduct.setProductId(rs.getInt("product_id"));
                     userProduct.setQuantity(rs.getInt("quantity"));
                     userProduct.setCreatedAt(rs.getTimestamp("created_at"));
-                    userProduct.setUpdatedAt(rs.getTimestamp("updated_at"));
+                    userProduct.setProductName(rs.getString("product_name"));
+                    userProduct.setUrlImage(rs.getString("url_image"));
+                    userProduct.setDescription(rs.getString("description"));
+                    userProduct.setPrice(rs.getInt("price"));
+                    userProduct.setCategoryName(rs.getString("category_name"));
+                    userProduct.setUserName(rs.getString("username"));
+                    userProduct.setAddress(rs.getString("address"));
+                    userProduct.setPhone(rs.getString("phone"));
                     return Optional.of(userProduct);
                 }
             });
@@ -95,7 +134,7 @@ public class UserProductDao {
         this.jdbcTemplate.update(query, map);
     }
 
-    public void update(UserProductDto.Update updateData, Integer id){
+    public void update(UserProductDto.Update updateData, Integer id) {
         String query = """
                 UPDATE public.user_product 
                 SET user_id=:user_id, product_id=:product_id, quantity=:quantity, updated_at=CURRENT_TIMESTAMP
@@ -110,7 +149,7 @@ public class UserProductDao {
         this.jdbcTemplate.update(query, map);
     }
 
-    public void decreaseStock(Products product, Integer quantity){
+    public void decreaseStock(Products product, Integer quantity) {
         String query = """
                 UPDATE public.products SET stock=:stock where id=:id
                 """;
@@ -123,8 +162,8 @@ public class UserProductDao {
 
     public void deleteByUser(Integer id) {
         String query = """
-               DELETE FROM public.user_product WHERE user_id=:id
-                """;
+                DELETE FROM public.user_product WHERE user_id=:id
+                 """;
 
         MapSqlParameterSource map = new MapSqlParameterSource();
         map.addValue("id", id);

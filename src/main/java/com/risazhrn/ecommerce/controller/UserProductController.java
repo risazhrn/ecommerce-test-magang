@@ -27,11 +27,17 @@ public class UserProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserProduct> findById(
+    public ResponseEntity<UserProduct.UserListTransaction> findById(
             @PathVariable(name = "id") Integer id
     ) {
-        UserProduct userProduct = this.service.findById(id);
+        UserProduct.UserListTransaction userProduct = this.service.findById(id);
         return ResponseEntity.ok(userProduct);
+    }
+
+    @GetMapping("/{user_id}/list")
+    public ResponseEntity<List<UserProduct.UserListTransaction>> findUserTransaction(@PathVariable(name = "user_id") Integer id) {
+        List<UserProduct.UserListTransaction> listTransaction = this.service.findUserTransaction(id);
+        return ResponseEntity.ok(listTransaction);
     }
 
     @PostMapping
