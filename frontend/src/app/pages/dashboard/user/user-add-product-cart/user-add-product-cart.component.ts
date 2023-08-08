@@ -25,13 +25,10 @@ export class UserAddProductCartComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    
-
     this.activateRoute.params.subscribe((param) => {
       this.userId = param['userId'];
     });
     this.products = this.localStorageService.getItem('cart') || [];
-
 
     this.localStorageSub = this.localStorageService
       .onLocalStorageChange()
@@ -42,29 +39,35 @@ export class UserAddProductCartComponent implements OnInit {
     this.products.map((e) => {
       this.total += e.price * e.quantity;
     });
-   
   }
 
   removeProductCart(id: number) {
     const productIndex = this.products.findIndex((e) => e.id === id);
     this.products.splice(productIndex, 1);
     this.localStorageService.setItem('cart', this.products);
-    if(this.products.length){
-      location.reload();
-    }
+
+    location.reload();
   }
 
   checkout() {
     this.products.map((e) => {
-      this.service.userTransaction({
-        user_id: +this.userId,
-        product_id: e.id,
-        quantity: e.quantity,
-      }).subscribe((resp) => {
-        console.log(resp.body)
-        this.router.navigate(['/', 'dashboard', 'user', this.userId, 'transaction']);
-        localStorage.clear()
-      });
+      this.service
+        .userTransaction({
+          user_id: +this.userId,
+          product_id: e.id,
+          quantity: e.quantity,
+        })
+        .subscribe((resp) => {
+          console.log(resp.body);
+          this.router.navigate([
+            '/',
+            'dashboard',
+            'user',
+            this.userId,
+            'transaction',
+          ]);
+          localStorage.clear();
+        });
     });
   }
 }

@@ -1,7 +1,10 @@
 <div class="container">
-  <!-- <h1>{{ title | titlecase }}</h1>
-  <p>{{ title | uppercase }}</p>
-  <p>{{ title | lowercase }}</p>
-  <h3>{{today | date:'fullDate'}}</h3>
-  <p>{{today | date : 'shortDate'}}</p> -->
+
+    <h2>Demo: NgZone</h2>
+
+    <p>Progress: {{progress}}%</p>
+    <p *ngIf="progress >= 100">Done processing {{label}} of Angular zone!</p>
+
+    <button (click)="processWithinAngularZone()">Process within Angular zone</button>
+    <button (click)="processOutsideOfAngularZone()">Process outside of Angular zone</button>
 </div>

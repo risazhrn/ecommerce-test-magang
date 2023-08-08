@@ -7,7 +7,7 @@
     <button class="btn btn-dark border border-light" [routerLink]="['/', 'dashboard', 'catalog-product', userId]">Catalog Product</button>
     <button type="button" class="btn btn-primary position-relative">
       <fa-icon [icon]="faShoppingCart"></fa-icon>
-      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" *ngIf="localCart > 0">
         {{localCart}}
         <span class="visually-hidden">Keranjang Produk</span>
       </span>

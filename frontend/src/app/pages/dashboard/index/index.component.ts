@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
+import { LocalStorageService } from '../local-storage.service';
 
 @Component({
   selector: 'app-index',
@@ -6,8 +7,37 @@ import { Component } from '@angular/core';
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent {
+  progress: number = 0;
+  label!: string;
 
-  title = 'Learning Basic Pipe';
-  today = Date();
+  constructor(private _ngZone: NgZone) {}
+
+  processWithinAngularZone() {
+    this.label = 'inside';
+    this.progress = 0;
+    this._increaseProgress(() => console.log('Inside Done!'));
+  }
+
+  processOutsideOfAngularZone() {
+    this.label = 'outside';
+    this.progress = 0;
+    this._ngZone.runOutsideAngular(() => {
+      this._increaseProgress(() => {
+        this._ngZone.run(() => { console.log('Outside Done!'); });
+      });
+    });
+  }
+
+  _increaseProgress(doneCallback: () => void) {
+    this.progress += 1;
+    console.log(`Current progress: ${this.progress}%`);
+
+    if (this.progress < 100) {
+      window.setTimeout(() => this._increaseProgress(doneCallback), 10);
+    } else {
+      doneCallback();
+    }
   
+   
+  }
 }
